@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="uk" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Atelier — Full-Stack Developer</title>
+<meta name="description" content="Full-Stack розробник: інтерактивні та естетичні веб-досвіди з 3D на Three.js">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@300;400;500;600&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<header>
+  <div class="wrap nav">
+    <a href="#hero" class="brand">Atelier</a>
+    <div class="nav-r">
+      <ul class="menu" id="menu">
+        <li><a href="#about">Про мене</a></li>
+        <li><a href="#services">Послуги</a></li>
+        <li><a href="#projects">Проєкти</a></li>
+        <li><a href="#results">Результати</a></li>
+        <li><a href="#reviews">Відгуки</a></li>
+        <li><a href="#price">Вартість</a></li>
+        <li><a href="#contact">Контакт</a></li>
+      </ul>
+      <button class="icon-btn" id="theme" aria-label="Змінити тему">
+        <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8"/><path d="M12 4a8 8 0 0 0 0 16Z" fill="currentColor"/></svg>
+      </button>
+      <button class="icon-btn burger" id="burger" aria-label="Меню" aria-expanded="false">
+        <svg viewBox="0 0 24 24"><path d="M4 9h16M4 15h16"/></svg>
+      </button>
+    </div>
+  </div>
+</header>
+
+<main>
+<!-- HERO -->
+<section id="hero">
+  <canvas id="stage" aria-hidden="true"></canvas>
+  <div class="wrap hero-c">
+    <h1 class="load">Full-Stack Developer. <span>Crafting interactive &amp; aesthetic web experiences.</span></h1>
+    <div class="hero-row">
+      <p class="load d2">Проєктую та розробляю сайти й веб-додатки: від інтерфейсу з 3D до сервера й бази даних.</p>
+      <div class="hero-actions load d3">
+        <a href="#services" class="btn">Послуги</a>
+        <a href="#contact" class="btn ghost">Зв'язатися</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section class="sec" id="about">
+  <div class="wrap sec-grid">
+    <h2 class="sec-title">Про мене</h2>
+    <div class="sec-body">
+      <p class="lead">Я створюю цифрові продукти повного циклу: проєктую інтерфейс, пишу клієнтську та серверну частини й доводжу все до запуску.</p>
+      <p class="lead">На frontend працюю з React і TypeScript, додаю стриману 3D-графіку на Three.js там, де вона допомагає. На backend використовую Node.js і Python: API, бази даних, платежі.</p>
+      <div class="stack">
+        <div>React <span>інтерфейси</span></div>
+        <div>TypeScript <span>надійність коду</span></div>
+        <div>Three.js <span>3D та WebGL</span></div>
+        <div>Node.js <span>сервер та API</span></div>
+        <div>Python <span>автоматизація, FastAPI</span></div>
+        <div>PostgreSQL <span>дані</span></div>
+        <div>PHP <span>CMS та інтеграції</span></div>
+        <div>Docker <span>розгортання</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SERVICES -->
+<section class="sec" id="services">
+  <div class="wrap sec-grid">
+    <h2 class="sec-title">Що я можу зробити</h2>
+    <div class="sec-body">
+      <p class="lead">Допомагаю бізнесу отримувати більше клієнтів і менше витрачати часу на рутину.</p>
+      <div class="services">
+        <article><h3>Створення сайтів</h3><p>Лендинги, сайти компаній та інтернет-магазини з акуратним дизайном, швидкі й адаптивні. За потреби додаю стриману 3D-графіку.</p></article>
+        <article><h3>Чат-боти</h3><p>Telegram-боти, які приймають заявки, відповідають на питання, показують каталог і приймають оплату.</p></article>
+        <article><h3>Онлайн-запис і бронювання</h3><p>Календар зі слотами для салонів, кафе, клінік і студій. Підтвердження та нагадування клієнтам надсилаються автоматично.</p></article>
+        <article><h3>Автоматизація процесів</h3><p>Заявки з сайту потрапляють у CRM або таблицю, менеджер отримує сповіщення, звіти формуються самі.</p></article>
+        <article><h3>Парсинг і збір даних</h3><p>Моніторинг цін конкурентів, збір каталогів, автоматичне оновлення залишків і цін у вашому магазині.</p></article>
+        <article><h3>Інтеграції та оплата</h3><p>Підключаю LiqPay, Stripe, Нову пошту, CRM та інші сервіси, щоб усе працювало як єдина система.</p></article>
+        <article><h3>Адмін-панелі та дашборди</h3><p>Зручне керування контентом, замовленнями та аналітикою продажів в одному місці.</p></article>
+        <article><h3>Підтримка й розвиток</h3><p>Хостинг, оновлення, швидкість, SEO та нові функції після запуску.</p></article>
+      </div>
+      <p class="more"><a class="ulink" href="#price">Дізнатися вартість</a></p>
+    </div>
+  </div>
+</section>
+
+<!-- PROJECTS -->
+<section class="sec" id="projects">
+  <div class="wrap sec-grid">
+    <h2 class="sec-title">Проєкти</h2>
+    <div class="sec-body">
+      <p class="lead" style="margin-bottom:56px">Відкрийте демо, щоб побачити, як це працює. Це фрагменти сайтів клієнтів: повні версії я не публікую через умови співпраці та авторські права.</p>
+      <div class="projects">
+
+        <article class="proj wide">
+          <a class="shot" href="projects/shop.html" data-preview="shop" aria-label="Відкрити демо інтернет-магазину"></a>
+          <div class="proj-meta">
+            <div><h3><a href="projects/shop.html">Інтернет-магазин одягу</a></h3><p>Каталог із фільтрами, вибір розміру, кошик і розрахунок безкоштовної доставки.</p></div>
+            <div class="side">HTML · CSS · JavaScript · Node.js<nav><a class="ulink" href="projects/shop.html">Відкрити демо</a></nav></div>
+          </div>
+        </article>
+
+        <article class="proj">
+          <a class="shot" href="projects/cafe.html" data-preview="cafe" aria-label="Відкрити демо сайту кафе"></a>
+          <div class="proj-meta">
+            <div><h3><a href="projects/cafe.html">Сайт кафе з бронюванням</a></h3><p>Меню з цінами та онлайн-бронювання столу зі слотами.</p></div>
+            <div class="side">JavaScript · Node.js · PostgreSQL<nav><a class="ulink" href="projects/cafe.html">Відкрити демо</a></nav></div>
+          </div>
+        </article>
+
+        <article class="proj">
+          <a class="shot" href="projects/bot.html" aria-label="Відкрити демо Telegram-бота">
+            <svg viewBox="0 0 420 262" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+              <rect width="420" height="262" fill="var(--panel)"/>
+              <rect x="40" y="40" width="190" height="42" rx="16" fill="var(--ink)" opacity=".1"/>
+              <rect x="190" y="98" width="190" height="42" rx="16" fill="var(--accent)"/>
+              <rect x="40" y="156" width="150" height="42" rx="16" fill="var(--ink)" opacity=".1"/>
+              <g fill="var(--ink)" opacity=".4"><rect x="56" y="58" width="110" height="6" rx="3"/><rect x="56" y="172" width="80" height="6" rx="3"/></g>
+              <rect x="206" y="116" width="120" height="6" rx="3" fill="#fff" opacity=".85"/>
+              <rect x="40" y="214" width="62" height="24" rx="12" fill="none" stroke="var(--line)"/><rect x="110" y="214" width="62" height="24" rx="12" fill="none" stroke="var(--line)"/>
+            </svg>
+          </a>
+          <div class="proj-meta">
+            <div><h3><a href="projects/bot.html">Telegram-бот із записом і CRM</a></h3><p>Бот приймає записи, а заявки автоматично потрапляють у CRM.</p></div>
+            <div class="side">Python · Telegram API · Google Sheets<nav><a class="ulink" href="projects/bot.html">Відкрити демо</a></nav></div>
+          </div>
+        </article>
+
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- RESULTS -->
+<!-- УВАГА: цифри нижче є прикладом. Замініть їх на реальні показники ваших клієнтів перед публікацією. -->
+<section class="sec" id="results">
+  <div class="wrap sec-grid">
+    <h2 class="sec-title">Результати</h2>
+    <div class="sec-body">
+      <p class="lead">Що змінюється в бізнесі після запуску сайту та автоматизації.</p>
+      <div class="stats">
+        <div><b><span data-count="42" data-prefix="+" data-suffix="%">+42%</span></b><span>онлайн-замовлень у магазині одягу за 3 місяці</span></div>
+        <div><b><span data-count="70" data-prefix="−" data-suffix="%">−70%</span></b><span>часу на рутинну обробку заявок після автоматизації</span></div>
+        <div><b><span data-count="35" data-prefix="+" data-suffix="%">+35%</span></b><span>бронювань після запуску онлайн-запису</span></div>
+        <div><b><span data-count="24" data-suffix="/7">24/7</span></b><span>бот приймає заявки без участі менеджера</span></div>
+      </div>
+
+      <div class="cases">
+        <div class="case">
+          <div class="case-h"><span>Магазин одягу</span><em>замовлень на місяць</em></div>
+          <div class="bar"><i style="--w:70%"></i><span>до: 310</span></div>
+          <div class="bar after"><i style="--w:100%"></i><span>після: 440</span></div>
+        </div>
+        <div class="case">
+          <div class="case-h"><span>Кафе</span><em>бронювань на тиждень</em></div>
+          <div class="bar"><i style="--w:74%"></i><span>до: 48</span></div>
+          <div class="bar after"><i style="--w:100%"></i><span>після: 65</span></div>
+        </div>
+        <div class="case">
+          <div class="case-h"><span>Салон краси</span><em>час відповіді клієнту</em></div>
+          <div class="bar"><i style="--w:100%"></i><span>до: 25 хв</span></div>
+          <div class="bar after"><i style="--w:6%"></i><span>після: 1 хв</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- REVIEWS -->
+<!-- УВАГА: відгуки нижче є прикладом. Замініть на реальні відгуки клієнтів (з їхньої згоди). -->
+<section class="sec" id="reviews">
+  <div class="wrap sec-grid">
+    <h2 class="sec-title">Відгуки</h2>
+    <div class="sec-body">
+      <div class="reviews">
+        <blockquote>
+          <p>Сайт запустили за два тижні, і вже в перший місяць стало помітно більше замовлень. Дуже зручно, що все працює швидко й без помилок.</p>
+          <footer><b>Олена К.</b><span>власниця магазину одягу</span></footer>
+        </blockquote>
+        <blockquote>
+          <p>Онлайн-бронювання зняло з адміністраторів купу дзвінків. Гості бронюють стіл самі, а ми бачимо все в одному місці.</p>
+          <footer><b>Андрій М.</b><span>власник кав'ярні</span></footer>
+        </blockquote>
+        <blockquote>
+          <p>Бот відповідає клієнтам уночі та записує їх у CRM. Менеджер більше не переписує заявки вручну, а це кілька годин на тиждень.</p>
+          <footer><b>Ірина Л.</b><span>керівниця салону краси</span></footer>
+        </blockquote>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PRICE -->
+<section class="sec" id="price">
+  <div class="wrap sec-grid">
+    <h2 class="sec-title">Вартість</h2>
+    <div class="sec-body">
+      <p class="lead">Ціна залежить від технічного стану вашого сайту та складності задачі: чи потрібно створити проєкт з нуля чи доопрацювати наявний, які функції, 3D, бекенд та інтеграції потрібні.</p>
+      <div class="range">
+        <div class="range-label">Орієнтовний діапазон</div>
+        <div class="range-val">від $150 до $3 000+</div>
+      </div>
+      <p class="lead">Простіші задачі, як-от бот, невеликий лендинг чи доопрацювання сайту, коштують дешевше. Інтернет-магазини та складні веб-додатки з бекендом і платежами дорожчі. Точну вартість і терміни я назву після короткого безкоштовного обговорення.</p>
+      <p class="more"><a class="btn" href="https://t.me/MarkAvreli111" target="_blank" rel="noopener">Обговорити в Telegram</a></p>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section class="sec" id="contact">
+  <div class="wrap sec-grid">
+    <h2 class="sec-title">Контакт</h2>
+    <div class="sec-body">
+      <p class="lead" style="margin-bottom:36px">Найшвидше зі мною зв'язатися в Telegram. Відповідаю протягом доби.</p>
+      <div class="direct">
+        <a class="btn" href="https://t.me/MarkAvreli111" target="_blank" rel="noopener">Написати в Telegram: @MarkAvreli111</a>
+        <a class="btn ghost" href="mailto:efritemarket@gmail.com">efritemarket@gmail.com</a>
+      </div>
+      <p class="or">Або залиште заявку, і вона прийде мені на пошту.</p>
+      <form class="form" id="form" novalidate>
+        <div class="field">
+          <label for="name">Ім'я</label>
+          <input type="text" id="name" name="name" autocomplete="name">
+          <div class="msg"></div>
+        </div>
+        <div class="field">
+          <label for="email">Ваш email</label>
+          <input type="email" id="email" name="email" autocomplete="email">
+          <div class="msg"></div>
+        </div>
+        <div class="field">
+          <label for="message">Повідомлення</label>
+          <textarea id="message" name="message"></textarea>
+          <div class="msg"></div>
+        </div>
+        <button type="submit" class="btn" id="submitBtn">Надіслати</button>
+        <div class="ok" id="ok" role="status">
+          <p>Заявку надіслано на пошту. Щоб я відповів швидше, напишіть мені ще й у Telegram: текст заявки вже скопійовано, лишається вставити.</p>
+          <p class="ok-actions"><a class="btn" id="tgOpen" href="https://t.me/MarkAvreli111" target="_blank" rel="noopener">Відкрити Telegram</a></p>
+        </div>
+        <div class="ok fail" id="fail" role="alert">
+          <p>Не вдалося надіслати заявку автоматично. Напишіть мені напряму:</p>
+          <p class="ok-actions"><a class="btn" href="https://t.me/MarkAvreli111" target="_blank" rel="noopener">Telegram</a><a class="btn ghost" id="mailFallback" href="mailto:efritemarket@gmail.com">Надіслати з пошти</a></p>
+        </div>
+      </form>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <div class="foot-top">
+      <a href="mailto:efritemarket@gmail.com" class="foot-mail ulink">efritemarket@gmail.com</a>
+      <div class="foot-links">
+        <ul>
+          <li>Контакти</li>
+          <li><a class="ulink" href="https://t.me/MarkAvreli111" target="_blank" rel="noopener">Telegram: @MarkAvreli111</a></li>
+        </ul>
+        <ul>
+          <li>Розділи</li>
+          <li><a class="ulink" href="#projects">Проєкти</a></li>
+          <li><a class="ulink" href="#services">Послуги</a></li>
+          <li><a class="ulink" href="#contact">Контакт</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="copy"><span>© <span id="year"></span> Atelier. Усі права захищені.</span><span>Працюю віддалено</span></div>
+  </div>
+</footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script src="js/art.js"></script>
+<script src="js/main.js"></script>
+</body>
+</html>

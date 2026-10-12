@@ -1,0 +1,13 @@
+/* Спільні стилі для демо-сторінок проєктів */
+.demo-bar{position:sticky;top:0;z-index:200;display:flex;align-items:center;justify-content:space-between;gap:16px;padding:12px 4%;background:#0e0f11;color:#e9eaee;font:500 13px/1.2 'Hanken Grotesk',system-ui,sans-serif}
+.demo-bar a{display:inline-flex;gap:8px;align-items:center;color:#e9eaee;border-bottom:1px solid transparent;transition:border-color .2s}
+.demo-bar a:hover{border-color:#e9eaee}
+.demo-bar span{opacity:.6}
+.demo-note{position:relative;display:flex;gap:16px;align-items:flex-start;padding:14px 4%;background:#eceef3;color:#2a2d36;font:400 13.5px/1.55 'Hanken Grotesk',system-ui,sans-serif;border-bottom:1px solid #d7dae2}
+.demo-note p{max-width:960px}
+.demo-note button{margin-left:auto;flex:none;width:28px;height:28px;border:0;border-radius:50%;background:transparent;color:#2a2d36;font-size:20px;line-height:1;cursor:pointer}
+.demo-note button:hover{background:rgba(0,0,0,.08)}
+.demo-note.hide{display:none}
+.demo-end{padding:48px 4%;text-align:center;font:400 14px/1.6 'Hanken Grotesk',system-ui,sans-serif;color:#777}
+.demo-end a{color:inherit;border-bottom:1px solid currentColor}
+@media(max-width:640px){.demo-bar span{display:none}}

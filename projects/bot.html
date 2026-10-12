@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Lume Studio — Telegram-бот із записом і CRM (демо-фрагмент)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../css/demo.css">
+<link rel="stylesheet" href="../css/bot.css">
+</head>
+<body>
+
+<div class="demo-bar"><a href="../index.html#projects">← До портфоліо</a><span>Демо-фрагмент системи клієнта</span></div>
+<div class="demo-note" id="demoNote">
+  <p>Це лише частина системи клієнта. Повну версію я не можу публікувати в портфоліо через умови співпраці та авторські права. Назва студії та дані клієнтів умовні. Спробуйте поспілкуватися з ботом, а справа побачите, що відбувається в CRM.</p>
+  <button data-close-note aria-label="Закрити">×</button>
+</div>
+
+<main class="wrap">
+  <section class="intro">
+    <h1>Telegram-бот для запису клієнтів</h1>
+    <p>Бот приймає записи цілодобово, відповідає на типові питання, нагадує про візит і передає заявку в CRM та менеджеру.</p>
+  </section>
+
+  <div class="layout">
+    <!-- Чат -->
+    <section class="phone" aria-label="Чат із ботом">
+      <header class="tg-head">
+        <div class="ava">L</div>
+        <div><b>Lume Studio</b><small>бот</small></div>
+      </header>
+      <div class="msgs" id="msgs" aria-live="polite"></div>
+      <form class="composer" id="composer">
+        <input type="text" id="input" placeholder="Повідомлення" autocomplete="off" aria-label="Повідомлення">
+        <button type="submit" aria-label="Надіслати">➤</button>
+      </form>
+    </section>
+
+    <!-- CRM -->
+    <section class="crm" aria-label="CRM">
+      <div class="crm-top">
+        <h2>CRM · заявки</h2>
+        <span class="live"><i></i>онлайн</span>
+      </div>
+      <div class="kpis">
+        <div><b id="kTotal">3</b><span>заявок сьогодні</span></div>
+        <div><b id="kNew">1</b><span>нових</span></div>
+        <div><b id="kSum">2 100 ₴</b><span>на суму</span></div>
+      </div>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Клієнт</th><th>Послуга</th><th>Коли</th><th>Статус</th></tr></thead>
+          <tbody id="rows"></tbody>
+        </table>
+      </div>
+      <h3>Автоматизація</h3>
+      <ol class="log" id="log"><li class="muted">Очікую заявку з бота…</li></ol>
+    </section>
+  </div>
+</main>
+
+<script src="../js/demo.js"></script>
+<script src="../js/bot.js"></script>
+</body>
+</html>
