@@ -1,99 +1,92 @@
 <!DOCTYPE html>
 <html lang="uk">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>NORTHLINE — інтернет-магазин одягу (демо-фрагмент)</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;600&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="../css/demo.css">
-<link rel="stylesheet" href="../css/shop.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>SPORTMAX — брендовий спортивний одяг</title>
+  <link rel="stylesheet" href="../css/demo.css">
+  <link rel="stylesheet" href="../css/shop.css">
 </head>
 <body>
-
-<div class="demo-bar"><a href="../index.html#projects">← До портфоліо</a><span>Демо-фрагмент сайту клієнта</span></div>
-<div class="demo-note" id="demoNote">
-  <p>Це лише частина сайту клієнта. Повну версію я не можу публікувати в портфоліо через умови співпраці та авторські права. Назва бренду й ціни тут умовні, а фото товарів надані з офіційного сайту adidas як візуальні приклади.</p>
-  <button data-close-note aria-label="Закрити">×</button>
-</div>
-
-<header class="shop-head">
-  <div class="inner">
-    <a class="logo" href="#">NORTHLINE</a>
-    <label class="search"><span class="sr">Пошук</span><input type="search" id="q" placeholder="Пошук товарів"></label>
-    <button class="cart-btn" id="openCart" aria-label="Відкрити кошик">Кошик <b id="cartCount">0</b></button>
-  </div>
-</header>
-
-<section class="banner">
-  <div class="inner">
-    <div>
-      <p class="kicker">Колекція осінь 2026</p>
-      <h1>Базовий одяг,<br>який носиться щодня</h1>
-      <p class="sub">Безкоштовна доставка Новою поштою від 2 500 ₴. Обмін протягом 14 днів.</p>
-      <a href="#catalog" class="shop-btn">Дивитися каталог</a>
+  <header class="header">
+    <div class="container header__inner">
+      <a href="#" class="logo">SPORT<span>MAX</span></a>
+      <nav class="nav">
+        <a href="#catalog">Каталог</a>
+        <a href="#about">Про нас</a>
+        <a href="#contacts">Контакти</a>
+      </nav>
+      <button class="cart-btn" id="openCart" aria-label="Відкрити кошик">
+        🛒 <span>Кошик</span> <b id="cartCount">0</b>
+      </button>
     </div>
-    <div class="banner-art" id="bannerArt" aria-hidden="true"></div>
-  </div>
-</section>
+  </header>
 
-<main class="inner" id="catalog">
-  <div class="toolbar">
-    <div class="cats" id="cats" role="tablist"></div>
-    <label class="sort">
-      <span class="sr">Сортування</span>
+  <section class="hero">
+    <div class="container hero__inner">
+      <h1>Брендовий спортивний одяг <br>і взуття</h1>
+      <p>Оригінальні кросівки, худі, футболки та аксесуари. Безкоштовна доставка від 3000 ₴.</p>
+      <a href="#catalog" class="btn btn--primary">До каталогу</a>
+    </div>
+  </section>
+
+  <main class="container" id="catalog">
+    <h2 class="section-title">Каталог</h2>
+
+    <div class="toolbar">
+      <div class="filters" id="filters"></div>
+      <input type="search" id="search" placeholder="Пошук за назвою або брендом…">
       <select id="sort">
-        <option value="pop">За популярністю</option>
-        <option value="asc">Спочатку дешевші</option>
-        <option value="desc">Спочатку дорожчі</option>
+        <option value="default">За замовчуванням</option>
+        <option value="asc">Ціна: від низької</option>
+        <option value="desc">Ціна: від високої</option>
+        <option value="name">За назвою</option>
       </select>
-    </label>
-  </div>
-  <div class="grid" id="grid"></div>
-  <p class="empty" id="empty" hidden>Нічого не знайдено. Спробуйте змінити запит.</p>
-</main>
-
-<footer class="shop-foot inner">
-  <span>© NORTHLINE, демо-проєкт</span>
-  <span>Доставка · Обмін та повернення · Контакти</span>
-</footer>
-
-<!-- Кошик -->
-<div class="overlay" id="overlay"></div>
-<aside class="drawer" id="drawer" aria-label="Кошик" aria-hidden="true">
-  <div class="drawer-head"><h2>Кошик</h2><button id="closeCart" aria-label="Закрити кошик">×</button></div>
-  <div class="ship">
-    <div class="ship-txt" id="shipTxt"></div>
-    <div class="ship-bar"><i id="shipBar"></i></div>
-  </div>
-  <ul class="items" id="items"></ul>
-  <div class="drawer-foot">
-    <div class="total"><span>Разом</span><b id="total">0 ₴</b></div>
-    <button class="shop-btn full" id="checkout">Оформити замовлення</button>
-  </div>
-</aside>
-<div class="toast" id="toast" role="status"></div>
-<div class="product-modal" id="productModal" aria-hidden="true">
-  <div class="product-dialog" role="dialog" aria-modal="true" aria-labelledby="productTitle">
-    <button class="product-close" id="closeProduct" aria-label="Закрити перегляд товару">×</button>
-    <div class="product-gallery">
-      <div class="product-main"><img id="productMainImage" src="" alt=""></div>
-      <div class="product-thumbs" id="productThumbs" aria-label="Додаткові фото товару"></div>
     </div>
-    <div class="product-info">
-      <p class="product-label" id="productLabel"></p>
-      <h2 id="productTitle"></h2>
-      <p class="product-price" id="productPrice"></p>
-      <p class="product-size-label">Оберіть розмір</p>
-      <div class="product-sizes" id="productSizes"></div>
-      <button class="shop-btn full" id="addFromProduct">Додати в кошик</button>
+
+    <div class="grid" id="products"></div>
+    <p class="empty" id="empty" hidden>Нічого не знайдено 😕</p>
+  </main>
+
+  <section class="about" id="about">
+    <div class="container about__grid">
+      <div><h3>🚚 Швидка доставка</h3><p>Відправляємо замовлення у день оплати по всій Україні.</p></div>
+      <div><h3>✅ Оригінал</h3><p>Працюємо лише з офіційними постачальниками брендів.</p></div>
+      <div><h3>↩️ Повернення 14 днів</h3><p>Не підійшов розмір? Обміняємо або повернемо кошти.</p></div>
+    </div>
+  </section>
+
+  <footer class="footer" id="contacts">
+    <div class="container">
+      <p>© <span id="year"></span> SPORTMAX · Тел.: +380 00 000 00 00 · info@sportmax.example</p>
+    </div>
+  </footer>
+
+  <div class="overlay" id="overlay" hidden></div>
+
+  <aside class="cart" id="cart" aria-hidden="true">
+    <div class="cart__head">
+      <h3>Ваш кошик</h3>
+      <button class="icon-btn" id="closeCart" aria-label="Закрити">✕</button>
+    </div>
+    <div class="cart__items" id="cartItems"></div>
+    <div class="cart__foot">
+      <div class="cart__total">Разом: <b id="cartTotal">0 ₴</b></div>
+      <button class="btn btn--primary btn--block" id="checkoutBtn">Оформити замовлення</button>
+      <button class="btn btn--ghost btn--block" id="clearCart">Очистити кошик</button>
+    </div>
+  </aside>
+
+  <div class="modal" id="modal" hidden>
+    <div class="modal__box">
+      <button class="icon-btn modal__close" id="closeModal" aria-label="Закрити">✕</button>
+      <div id="modalContent"></div>
     </div>
   </div>
-</div>
 
-<script src="../js/art.js"></script>
-<script src="../js/demo.js"></script>
-<script src="../js/shop.js"></script>
+  <div class="toast" id="toast" role="status"></div>
+
+  <script src="../js/demo.js"></script>
+  <script src="../js/shop.js"></script>
 </body>
 </html>
