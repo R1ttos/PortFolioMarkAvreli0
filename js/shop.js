@@ -1,192 +1,268 @@
-(function(){
-'use strict';
-const CUR = '₴', FREE_FROM = 2500;
-const fmt = n => n.toLocaleString('uk-UA') + ' ' + CUR;
+"use strict";
 
-const CATS = {all:'Усе', tees:'Футболки', hoodies:'Худі', pants:'Штани', outer:'Верхній одяг', shoes:'Взуття', acc:'Аксесуари'};
-const SIZES = {clothes:['XS','S','M','L','XL'], shoes:['40','41','42','43','44'], one:['One size']};
+const img = (id) => `https://images.unsplash.com/photo-${id}?w=700&h=700&fit=crop&q=75`;
+const FALLBACK = "data:image/svg+xml;utf8," + encodeURIComponent(
+  '<svg xmlns="http://www.w3.org/2000/svg" width="700" height="700"><rect width="100%" height="100%" fill="#e5e7eb"/><text x="50%" y="50%" text-anchor="middle" fill="#9ca3af" font-size="28" font-family="Arial">Фото недоступне</text></svg>'
+);
+
+const SHOE_SIZES = ["40", "41", "42", "43", "44", "45"];
+const CLOTH_SIZES = ["S", "M", "L", "XL"];
+
+// Додавайте/редагуйте товари тут
 const PRODUCTS = [
-  {id:1, name:'Adicolor Classics Trefoil Tee', cat:'tees', price:1199, label:'Білий', sizes:'clothes', pop:9, images:[
-    'https://assets.adidas.com/images/h_840,f_auto,q_auto,fl_lossy,c_fill,g_auto/9fd2849e03ce446a993dad4900b81016_9366/Adicolor_Classics_Trefoil_Tee_White_H06637_01_laydown.jpg',
-    'https://assets.adidas.com/images/h_840,f_auto,q_auto,fl_lossy,c_fill,g_auto/9fd2849e03ce446a993dad4900b81016_9366/Adicolor_Classics_Trefoil_Tee_White_H06637_02_laydown.jpg',
-    'https://assets.adidas.com/images/h_840,f_auto,q_auto,fl_lossy,c_fill,g_auto/9fd2849e03ce446a993dad4900b81016_9366/Adicolor_Classics_Trefoil_Tee_White_H06637_03_laydown.jpg']},
-  {id:2, name:'Trefoil Essentials T-Shirt', cat:'tees', price:1199, label:'Чорний', sizes:'clothes', pop:8, images:[
-    'https://assets.adidas.com/images/h_840,f_auto,q_auto,fl_lossy,c_fill,g_auto/9f5302c7faee4750ba310b4d73341805_9366/TREFOIL_ESSENTIALS_T-SHIRT_Black_KS8890_01_laydown.jpg',
-    'https://assets.adidas.com/images/h_840,f_auto,q_auto,fl_lossy,c_fill,g_auto/9f5302c7faee4750ba310b4d73341805_9366/TREFOIL_ESSENTIALS_T-SHIRT_Black_KS8890_02_laydown.jpg',
-    'https://assets.adidas.com/images/h_840,f_auto,q_auto,fl_lossy,c_fill,g_auto/9f5302c7faee4750ba310b4d73341805_9366/TREFOIL_ESSENTIALS_T-SHIRT_Black_KS8890_03_laydown.jpg']},
-  {id:3, name:'Adicolor Classics 3-Stripes Hoodie', cat:'hoodies', price:2799, old:3199, label:'Чорний', sizes:'clothes', pop:10, images:[
-    'https://assets.adidas.com/images/h_840,f_auto,q_auto,fl_lossy,c_fill,g_auto/b2e6da08a96b4c078ac3af0201041cd8_9366/Adicolor_Classics_3-Stripes_Hoodie_Black_IA6346_01_laydown.jpg',
-    'https://assets.adidas.com/images/h_840,f_auto,q_auto,fl_lossy,c_fill,g_auto/b2e6da08a96b4c078ac3af0201041cd8_9366/Adicolor_Classics_3-Stripes_Hoodie_Black_IA6346_02_laydown.jpg',
-    'https://assets.adidas.com/images/h_840,f_auto,q_auto,fl_lossy,c_fill,g_auto/b2e6da08a96b4c078ac3af0201041cd8_9366/Adicolor_Classics_3-Stripes_Hoodie_Black_IA6346_03_laydown.jpg']},
-  {id:4, name:'Firebird Track Pants', cat:'pants', price:2599, label:'Чорний', sizes:'clothes', pop:7, images:[
-    'https://assets.adidas.com/images/h_840,f_auto,q_auto,fl_lossy,c_fill,g_auto/1651f914a4f0430490ed636fb21d1cf6_9366/Firebird_Track_Pants_Black_KD8315_01_laydown.jpg',
-    'https://assets.adidas.com/images/h_840,f_auto,q_auto,fl_lossy,c_fill,g_auto/1651f914a4f0430490ed636fb21d1cf6_9366/Firebird_Track_Pants_Black_KD8315_02_laydown.jpg',
-    'https://assets.adidas.com/images/h_840,f_auto,q_auto,fl_lossy,c_fill,g_auto/1651f914a4f0430490ed636fb21d1cf6_9366/Firebird_Track_Pants_Black_KD8315_03_laydown.jpg']},
-  {id:6, name:'Firebird Track Top', cat:'outer', price:2999, label:'Чорний', sizes:'clothes', pop:6, images:[
-    'https://assets.adidas.com/images/h_840,f_auto,q_auto,fl_lossy,c_fill,g_auto/7527fd27f027418a9c05c30c57ffc064_9366/Firebird_Track_Top_Black_KD3842_01_laydown.jpg',
-    'https://assets.adidas.com/images/h_840,f_auto,q_auto,fl_lossy,c_fill,g_auto/7527fd27f027418a9c05c30c57ffc064_9366/Firebird_Track_Top_Black_KD3842_02_laydown.jpg',
-    'https://assets.adidas.com/images/h_840,f_auto,q_auto,fl_lossy,c_fill,g_auto/7527fd27f027418a9c05c30c57ffc064_9366/Firebird_Track_Top_Black_KD3842_03_laydown.jpg']},
-  {id:7, name:'Samba OG Shoes', cat:'shoes', price:4499, label:'Білий', sizes:'shoes', pop:9, images:[
-    'https://assets.adidas.com/images/h_840,f_auto,q_auto,fl_lossy,c_fill,g_auto/f88fdc6701a845be8fa1b2d0656b4ab0_9366/SAMBA_OG_SHOES_White_KJ7435_01_standard.jpg',
-    'https://assets.adidas.com/images/h_840,f_auto,q_auto,fl_lossy,c_fill,g_auto/f88fdc6701a845be8fa1b2d0656b4ab0_9366/SAMBA_OG_SHOES_White_KJ7435_02_standard.jpg',
-    'https://assets.adidas.com/images/h_840,f_auto,q_auto,fl_lossy,c_fill,g_auto/f88fdc6701a845be8fa1b2d0656b4ab0_9366/SAMBA_OG_SHOES_White_KJ7435_03_standard.jpg']},
-  {id:8, name:'Trefoil Outline Baseball Cap', cat:'acc', price:1099, label:'Чорний', sizes:'one', pop:5, images:[
-    'https://assets.adidas.com/images/h_840,f_auto,q_auto,fl_lossy,c_fill,g_auto/c1e45f74e97e46db91e07825c948c799_9366/Polyurethane_Trefoil_Outline_Baseball_Cap_Black_IY4059_01_standard.jpg',
-    'https://assets.adidas.com/images/h_840,f_auto,q_auto,fl_lossy,c_fill,g_auto/c1e45f74e97e46db91e07825c948c799_9366/Polyurethane_Trefoil_Outline_Baseball_Cap_Black_IY4059_02_standard.jpg',
-    'https://assets.adidas.com/images/h_840,f_auto,q_auto,fl_lossy,c_fill,g_auto/c1e45f74e97e46db91e07825c948c799_9366/Polyurethane_Trefoil_Outline_Baseball_Cap_Black_IY4059_03_standard.jpg']}
+  { id: 1,  brand: "Nike",        title: "Free RN Flyknit",          category: "Взуття",     price: 3899, old: 4599, badge: "-15%", image: img("1542291026-7eec264c27ff"), sizes: SHOE_SIZES },
+  { id: 2,  brand: "Nike",        title: "LunarEpic Black",          category: "Взуття",     price: 4299, image: img("1491553895911-0055eca6402d"), sizes: SHOE_SIZES },
+  { id: 3,  brand: "Nike",        title: "Air Jordan 1 Low",         category: "Взуття",     price: 5499, badge: "Хіт", image: img("1556906781-9a412961c28c"), sizes: SHOE_SIZES },
+  { id: 4,  brand: "Nike",        title: "Air Force 1 Shadow",       category: "Взуття",     price: 5199, image: img("1595950653106-6c9ebd614d3a"), sizes: SHOE_SIZES },
+  { id: 5,  brand: "Nike",        title: "SB Stefan Janoski",        category: "Взуття",     price: 3699, image: img("1460353581641-37baddab0fa2"), sizes: SHOE_SIZES },
+  { id: 6,  brand: "New Balance", title: "247 Olive",                category: "Взуття",     price: 3999, image: img("1539185441755-769473a23570"), sizes: SHOE_SIZES },
+  { id: 7,  brand: "Nike",        title: "Air Jordan 1 Bred",        category: "Взуття",     price: 6299, old: 6999, badge: "-10%", image: img("1552346154-21d32810aba3"), sizes: SHOE_SIZES },
+  { id: 8,  brand: "Nike",        title: "SB Dunk High",             category: "Взуття",     price: 5799, image: img("1584735175315-9d5df23860e6"), sizes: SHOE_SIZES },
+  { id: 9,  brand: "Nike",        title: "Air Max 90 Ultra",         category: "Взуття",     price: 4999, image: img("1515955656352-a1fa3ffcd111"), sizes: SHOE_SIZES },
+  { id: 10, brand: "Nike",        title: "SuperRep Go Volt",         category: "Взуття",     price: 3499, badge: "Новинка", image: img("1606107557195-0e29a4b5b4aa"), sizes: SHOE_SIZES },
+  { id: 11, brand: "Adidas",      title: "Deerupt Runner",           category: "Взуття",     price: 3299, old: 3999, badge: "-17%", image: img("1562183241-b937e95585b6"), sizes: SHOE_SIZES },
+  { id: 12, brand: "Sport Basics", title: "Худі Grey Classic",       category: "Худі",       price: 1899, image: img("1556821840-3a63f95609a7"), sizes: CLOTH_SIZES },
+  { id: 13, brand: "Sport Basics", title: "Світшот Black Logo",      category: "Худі",       price: 2099, image: img("1578681994506-b8f463449011"), sizes: CLOTH_SIZES },
+  { id: 14, brand: "Sport Basics", title: "Спортивний костюм Sun",   category: "Худі",       price: 2999, badge: "Хіт", image: img("1515886657613-9f3515b0c78f"), sizes: CLOTH_SIZES },
+  { id: 15, brand: "Sport Basics", title: "Футболка White Essential", category: "Футболки",  price: 899,  image: img("1521572163474-6864f9cf17ab"), sizes: CLOTH_SIZES },
+  { id: 16, brand: "Sport Basics", title: "Топ Peace Black",         category: "Футболки",   price: 799,  image: img("1503342217505-b0a15ec3261c"), sizes: CLOTH_SIZES },
+  { id: 17, brand: "Sport Basics", title: "Футболка Awesome",        category: "Футболки",   price: 949,  image: img("1571945153237-4929e783af4a"), sizes: CLOTH_SIZES },
+  { id: 18, brand: "Sport Basics", title: "Футболка Black Minimal",  category: "Футболки",   price: 849,  image: img("1583743814966-8936f5b7be1a"), sizes: CLOTH_SIZES },
+  { id: 19, brand: "Sport Basics", title: "Футболка Original Beige", category: "Футболки",   price: 999,  image: img("1576566588028-4147f3842f27"), sizes: CLOTH_SIZES },
+  { id: 20, brand: "RVCA",        title: "Кепка VA All The Way",     category: "Аксесуари",  price: 1099, image: img("1556306535-0f09a537f0a3"), sizes: ["One size"] },
 ];
-const $ = id => document.getElementById(id);
-const pic = (p, index = 0) => `<img src="${p.images[index]}" alt="${p.name}">`;
 
-/* Банер */
-$('bannerArt').innerHTML = [3,7,6].map(id => { const p = PRODUCTS.find(x => x.id === id); return `<div>${pic(p)}</div>`; }).join('');
+const state = {
+  category: "Усі",
+  query: "",
+  sort: "default",
+  selectedSize: {},
+  cart: JSON.parse(localStorage.getItem("sportmax_cart") || "[]"),
+};
 
-/* Стан */
-const state = {cat:'all', sort:'pop', q:'', size:{}, productId:null, image:{}};
-let cart = [];
-try { cart = JSON.parse(localStorage.getItem('northline_cart') || '[]'); } catch(e){}
-const save = () => { try { localStorage.setItem('northline_cart', JSON.stringify(cart)); } catch(e){} };
+const $ = (s) => document.querySelector(s);
+const money = (n) => n.toLocaleString("uk-UA") + " ₴";
+const escapeHtml = (s) => String(s).replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
 
-/* Каталог */
-$('cats').innerHTML = Object.entries(CATS).map(([k,v]) => `<button data-cat="${k}" class="${k==='all'?'on':''}">${v}</button>`).join('');
-function defaultSize(p){ const s = SIZES[p.sizes]; return s[Math.floor(s.length/2)]; }
-function renderGrid(){
-  let list = PRODUCTS.filter(p => (state.cat === 'all' || p.cat === state.cat) && p.name.toLowerCase().includes(state.q));
-  if (state.sort === 'asc') list.sort((a,b) => a.price - b.price);
-  else if (state.sort === 'desc') list.sort((a,b) => b.price - a.price);
-  else list.sort((a,b) => b.pop - a.pop);
-  $('empty').hidden = list.length > 0;
-  $('grid').innerHTML = list.map(p => {
-    const sel = state.size[p.id] || (state.size[p.id] = defaultSize(p));
-    const sale = p.old ? `<span class="badge">-${Math.round((1 - p.price/p.old)*100)}%</span>` : '';
-    return `<article class="card" data-id="${p.id}">
-      <button class="product-view" data-view aria-label="Переглянути ${p.name}">
-        <div class="pic">${sale}${pic(p)}</div>
-      </button>
-      <div class="meta"><h3>${p.name}</h3><span class="col">${p.label}</span>
-        <span class="price">${fmt(p.price)}${p.old ? `<s>${fmt(p.old)}</s>` : ''}</span></div>
-      <div class="sizes">${SIZES[p.sizes].map(s => `<button data-size="${s}" class="${s===sel?'on':''}">${s}</button>`).join('')}</div>
-      <button class="add" data-add>Додати в кошик</button>
+/* ---------- Каталог ---------- */
+function renderFilters() {
+  const cats = ["Усі", ...new Set(PRODUCTS.map((p) => p.category))];
+  $("#filters").innerHTML = cats
+    .map((c) => `<button class="chip ${c === state.category ? "active" : ""}" data-cat="${escapeHtml(c)}">${escapeHtml(c)}</button>`)
+    .join("");
+}
+
+function getVisible() {
+  const q = state.query.trim().toLowerCase();
+  let list = PRODUCTS.filter((p) =>
+    (state.category === "Усі" || p.category === state.category) &&
+    (!q || `${p.brand} ${p.title}`.toLowerCase().includes(q))
+  );
+  if (state.sort === "asc") list.sort((a, b) => a.price - b.price);
+  if (state.sort === "desc") list.sort((a, b) => b.price - a.price);
+  if (state.sort === "name") list.sort((a, b) => a.title.localeCompare(b.title, "uk"));
+  return list;
+}
+
+function renderProducts() {
+  const list = getVisible();
+  $("#empty").hidden = list.length > 0;
+  $("#products").innerHTML = list.map((p) => {
+    const sel = state.selectedSize[p.id] || (p.sizes.length === 1 ? p.sizes[0] : null);
+    return `
+    <article class="card" data-id="${p.id}">
+      <div class="card__img">
+        ${p.badge ? `<span class="card__badge">${escapeHtml(p.badge)}</span>` : ""}
+        <img src="${p.image}" alt="${escapeHtml(p.brand + " " + p.title)}" loading="lazy" referrerpolicy="no-referrer">
+      </div>
+      <div class="card__body">
+        <div class="card__brand">${escapeHtml(p.brand)}</div>
+        <h3 class="card__title">${escapeHtml(p.title)}</h3>
+        <div class="card__sizes">
+          ${p.sizes.map((s) => `<button class="size ${s === sel ? "active" : ""}" data-size="${s}">${s}</button>`).join("")}
+        </div>
+        <div class="card__foot">
+          <div class="price">${money(p.price)}${p.old ? `<s>${money(p.old)}</s>` : ""}</div>
+          <button class="btn btn--primary" data-add>У кошик</button>
+        </div>
+      </div>
     </article>`;
-  }).join('');
-}
-renderGrid();
+  }).join("");
 
-$('cats').addEventListener('click', e => {
-  const b = e.target.closest('[data-cat]'); if (!b) return;
-  state.cat = b.dataset.cat;
-  document.querySelectorAll('#cats button').forEach(x => x.classList.toggle('on', x === b));
-  renderGrid();
-});
-$('sort').addEventListener('change', e => { state.sort = e.target.value; renderGrid(); });
-$('q').addEventListener('input', e => { state.q = e.target.value.trim().toLowerCase(); renderGrid(); });
-function addToCart(id){
-  const size = state.size[id];
-  const ex = cart.find(i => i.id === id && i.size === size);
-  ex ? ex.qty++ : cart.push({id, size, qty:1});
-  save();
+  document.querySelectorAll(".card__img img, .cart-item img").forEach(bindFallback);
+}
+
+function bindFallback(el) {
+  el.addEventListener("error", () => { el.src = FALLBACK; }, { once: true });
+}
+
+/* ---------- Кошик ---------- */
+const saveCart = () => localStorage.setItem("sportmax_cart", JSON.stringify(state.cart));
+
+function addToCart(id) {
+  const p = PRODUCTS.find((x) => x.id === id);
+  const size = state.selectedSize[id] || (p.sizes.length === 1 ? p.sizes[0] : null);
+  if (!size) { toast("Оберіть розмір"); return; }
+  const found = state.cart.find((i) => i.id === id && i.size === size);
+  if (found) found.qty++;
+  else state.cart.push({ id, size, qty: 1 });
+  saveCart();
   renderCart();
-  toast('Додано в кошик');
+  toast(`Додано: ${p.brand} ${p.title} (${size})`);
 }
-$('grid').addEventListener('click', e => {
-  const card = e.target.closest('.card'); if (!card) return;
-  const id = +card.dataset.id;
-  const sz = e.target.closest('[data-size]');
-  if (sz){ state.size[id] = sz.dataset.size; card.querySelectorAll('[data-size]').forEach(b => b.classList.toggle('on', b === sz)); return; }
-  if (e.target.closest('[data-view]')) openProduct(id);
-  if (e.target.closest('[data-add]')) addToCart(id);
+
+function changeQty(id, size, delta) {
+  const item = state.cart.find((i) => i.id === id && i.size === size);
+  if (!item) return;
+  item.qty += delta;
+  if (item.qty <= 0) state.cart = state.cart.filter((i) => i !== item);
+  saveCart();
+  renderCart();
+}
+
+function removeItem(id, size) {
+  state.cart = state.cart.filter((i) => !(i.id === id && i.size === size));
+  saveCart();
+  renderCart();
+}
+
+function cartTotal() {
+  return state.cart.reduce((sum, i) => sum + PRODUCTS.find((p) => p.id === i.id).price * i.qty, 0);
+}
+
+function renderCart() {
+  state.cart = state.cart.filter((i) => PRODUCTS.some((p) => p.id === i.id));
+  $("#cartCount").textContent = state.cart.reduce((n, i) => n + i.qty, 0);
+  $("#cartTotal").textContent = money(cartTotal());
+
+  $("#cartItems").innerHTML = state.cart.length
+    ? state.cart.map((i) => {
+        const p = PRODUCTS.find((x) => x.id === i.id);
+        return `
+        <div class="cart-item" data-id="${i.id}" data-size="${i.size}">
+          <img src="${p.image}" alt="" referrerpolicy="no-referrer">
+          <div>
+            <div class="cart-item__title">${escapeHtml(p.brand)} ${escapeHtml(p.title)}</div>
+            <div class="cart-item__meta">Розмір: ${i.size}</div>
+            <div class="qty"><button data-dec>−</button><span>${i.qty}</span><button data-inc>+</button></div>
+          </div>
+          <div class="cart-item__right">
+            <b>${money(p.price * i.qty)}</b>
+            <button class="remove" data-remove>Видалити</button>
+          </div>
+        </div>`;
+      }).join("")
+    : '<p class="cart__empty">Кошик порожній 🛒</p>';
+
+  document.querySelectorAll(".cart-item img").forEach(bindFallback);
+}
+
+function openCart(open) {
+  $("#cart").classList.toggle("open", open);
+  $("#cart").setAttribute("aria-hidden", String(!open));
+  $("#overlay").hidden = !open;
+}
+
+/* ---------- Оформлення замовлення ---------- */
+function openModal(html) {
+  $("#modalContent").innerHTML = html;
+  $("#modal").hidden = false;
+}
+const closeModal = () => { $("#modal").hidden = true; };
+
+function checkout() {
+  if (!state.cart.length) { toast("Кошик порожній"); return; }
+  openCart(false);
+  openModal(`
+    <h3>Оформлення замовлення</h3>
+    <p style="margin-bottom:14px">До сплати: <b>${money(cartTotal())}</b></p>
+    <form class="form" id="orderForm">
+      <label>Ім'я<input name="name" required minlength="2" autocomplete="name"></label>
+      <label>Телефон<input name="phone" type="tel" required pattern="[+0-9 ()\\-]{9,}" placeholder="+380..." autocomplete="tel"></label>
+      <label>Місто та відділення пошти<input name="address" required autocomplete="street-address"></label>
+      <label>Коментар<textarea name="comment" rows="2"></textarea></label>
+      <button class="btn btn--primary btn--block" type="submit">Підтвердити замовлення</button>
+    </form>`);
+}
+
+function submitOrder(form) {
+  const data = new FormData(form);
+  const orderNo = Math.floor(100000 + Math.random() * 900000);
+  state.cart = [];
+  saveCart();
+  renderCart();
+  openModal(`
+    <div class="success">
+      <div class="big">🎉</div>
+      <h3>Дякуємо, ${escapeHtml(data.get("name"))}!</h3>
+      <p>Замовлення №${orderNo} прийнято. Ми зателефонуємо на ${escapeHtml(data.get("phone"))} для підтвердження.</p>
+      <button class="btn btn--primary btn--block" id="okBtn">Чудово</button>
+    </div>`);
+}
+
+/* ---------- Сповіщення ---------- */
+let toastTimer;
+function toast(msg) {
+  const t = $("#toast");
+  t.textContent = msg;
+  t.classList.add("show");
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => t.classList.remove("show"), 2200);
+}
+
+/* ---------- Події ---------- */
+$("#filters").addEventListener("click", (e) => {
+  const b = e.target.closest("[data-cat]");
+  if (!b) return;
+  state.category = b.dataset.cat;
+  renderFilters();
+  renderProducts();
 });
 
-/* Перегляд товару */
-const productModal = $('productModal');
-function renderProduct(){
-  const p = PRODUCTS.find(x => x.id === state.productId);
-  if (!p) return;
-  const activeImage = state.image[p.id] || 0;
-  const selectedSize = state.size[p.id] || (state.size[p.id] = defaultSize(p));
-  $('productMainImage').src = p.images[activeImage];
-  $('productMainImage').alt = p.name;
-  $('productLabel').textContent = p.label;
-  $('productTitle').textContent = p.name;
-  $('productPrice').textContent = fmt(p.price);
-  $('productThumbs').innerHTML = p.images.map((src, index) =>
-    `<button data-image="${index}" class="${index === activeImage ? 'on' : ''}" aria-label="Фото ${index + 1} товару"><img src="${src}" alt=""></button>`
-  ).join('');
-  $('productSizes').innerHTML = SIZES[p.sizes].map(size =>
-    `<button data-product-size="${size}" class="${size === selectedSize ? 'on' : ''}">${size}</button>`
-  ).join('');
-}
-function openProduct(id){
-  state.productId = id;
-  renderProduct();
-  productModal.classList.add('on');
-  productModal.setAttribute('aria-hidden', 'false');
-  $('closeProduct').focus();
-}
-function closeProduct(){
-  productModal.classList.remove('on');
-  productModal.setAttribute('aria-hidden', 'true');
-  state.productId = null;
-}
-$('closeProduct').addEventListener('click', closeProduct);
-productModal.addEventListener('click', e => {
-  if (e.target === productModal) closeProduct();
-  const imageButton = e.target.closest('[data-image]');
-  if (imageButton){
-    state.image[state.productId] = +imageButton.dataset.image;
-    renderProduct();
+$("#search").addEventListener("input", (e) => { state.query = e.target.value; renderProducts(); });
+$("#sort").addEventListener("change", (e) => { state.sort = e.target.value; renderProducts(); });
+
+$("#products").addEventListener("click", (e) => {
+  const card = e.target.closest(".card");
+  if (!card) return;
+  const id = Number(card.dataset.id);
+  const sizeBtn = e.target.closest("[data-size]");
+  if (sizeBtn) {
+    state.selectedSize[id] = sizeBtn.dataset.size;
+    card.querySelectorAll(".size").forEach((s) => s.classList.toggle("active", s === sizeBtn));
+  } else if (e.target.closest("[data-add]")) {
+    addToCart(id);
   }
-  const sizeButton = e.target.closest('[data-product-size]');
-  if (sizeButton){
-    state.size[state.productId] = sizeButton.dataset.productSize;
-    renderProduct();
-  }
-});
-$('addFromProduct').addEventListener('click', () => {
-  addToCart(state.productId);
-  closeProduct();
 });
 
-/* Кошик */
-const drawer = $('drawer'), overlay = $('overlay');
-function openCart(o){ drawer.classList.toggle('on', o); overlay.classList.toggle('on', o); drawer.setAttribute('aria-hidden', !o); }
-$('openCart').addEventListener('click', () => openCart(true));
-$('closeCart').addEventListener('click', () => openCart(false));
-overlay.addEventListener('click', () => openCart(false));
-addEventListener('keydown', e => {
-  if (e.key !== 'Escape') return;
-  if (productModal.classList.contains('on')) closeProduct();
-  else openCart(false);
+$("#cartItems").addEventListener("click", (e) => {
+  const row = e.target.closest(".cart-item");
+  if (!row) return;
+  const id = Number(row.dataset.id), size = row.dataset.size;
+  if (e.target.closest("[data-inc]")) changeQty(id, size, 1);
+  else if (e.target.closest("[data-dec]")) changeQty(id, size, -1);
+  else if (e.target.closest("[data-remove]")) removeItem(id, size);
 });
 
-function renderCart(){
-  const count = cart.reduce((s,i) => s + i.qty, 0);
-  const total = cart.reduce((s,i) => s + i.qty * PRODUCTS.find(p => p.id === i.id).price, 0);
-  $('cartCount').textContent = count;
-  $('total').textContent = fmt(total);
-  const left = FREE_FROM - total;
-  $('shipTxt').textContent = total === 0 ? `Безкоштовна доставка від ${fmt(FREE_FROM)}`
-    : left > 0 ? `До безкоштовної доставки залишилось ${fmt(left)}` : 'Доставка безкоштовна';
-  $('shipBar').style.width = Math.min(100, total / FREE_FROM * 100) + '%';
-  $('items').innerHTML = cart.length ? cart.map((i, idx) => {
-    const p = PRODUCTS.find(x => x.id === i.id);
-    return `<li class="line"><div class="th">${pic(p)}</div><div>
-      <h4>${p.name}</h4><small>${p.label}, розмір ${i.size}</small>
-      <div class="row"><span><span class="qty"><button data-q="-1" data-i="${idx}" aria-label="Менше">−</button><span>${i.qty}</span><button data-q="1" data-i="${idx}" aria-label="Більше">+</button></span><button class="rm" data-rm="${idx}">Видалити</button></span><b>${fmt(p.price * i.qty)}</b></div>
-    </div></li>`;
-  }).join('') : '<li class="none">Кошик порожній</li>';
-}
-$('items').addEventListener('click', e => {
-  const q = e.target.closest('[data-q]'), r = e.target.closest('[data-rm]');
-  if (q){ const it = cart[+q.dataset.i]; it.qty += +q.dataset.q; if (it.qty < 1) cart.splice(+q.dataset.i, 1); }
-  if (r) cart.splice(+r.dataset.rm, 1);
-  if (q || r){ save(); renderCart(); }
+$("#openCart").addEventListener("click", () => openCart(true));
+$("#closeCart").addEventListener("click", () => openCart(false));
+$("#overlay").addEventListener("click", () => openCart(false));
+$("#clearCart").addEventListener("click", () => { state.cart = []; saveCart(); renderCart(); });
+$("#checkoutBtn").addEventListener("click", checkout);
+$("#closeModal").addEventListener("click", closeModal);
+$("#modal").addEventListener("click", (e) => { if (e.target.id === "modal") closeModal(); });
+$("#modalContent").addEventListener("submit", (e) => {
+  if (e.target.id !== "orderForm") return;
+  e.preventDefault();
+  submitOrder(e.target);
 });
-$('checkout').addEventListener('click', () => {
-  toast(cart.length ? 'Демо-версія: оформлення замовлення тут вимкнене' : 'Додайте товар у кошик');
+$("#modalContent").addEventListener("click", (e) => { if (e.target.id === "okBtn") closeModal(); });
+document.addEventListener("keydown", (e) => {
+  if (e.key === "Escape") { closeModal(); openCart(false); }
 });
+
+/* ---------- Старт ---------- */
+$("#year").textContent = new Date().getFullYear();
+renderFilters();
+renderProducts();
 renderCart();
-
-let tt;
-function toast(msg){ const t = $('toast'); t.textContent = msg; t.classList.add('on'); clearTimeout(tt); tt = setTimeout(() => t.classList.remove('on'), 2200); }
-})();
